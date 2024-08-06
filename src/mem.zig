@@ -81,7 +81,7 @@ pub const ValueRef = struct {
 
 pub fn newValue(x: Value) !ValueRef {
     std.log.debug("alloc.create {} bytes for {}.{s}", .{ @sizeOf(Value), Value, @tagName(x) });
-    var ptr: *Value = try alloc.create(Value);
+    const ptr: *Value = try alloc.create(Value);
     ptr.* = x;
     return ValueRef{ .ptr = ptr };
 }
