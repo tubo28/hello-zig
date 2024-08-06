@@ -73,7 +73,7 @@ pub fn tokenize(code: []const u8) ![]const Token {
         }
 
         if (isSymbolChar(code[i])) {
-            var begin = i;
+            const begin = i;
             while (i < code.len and isSymbolChar(code[i])) i += 1;
 
             const tok = code[begin..i];

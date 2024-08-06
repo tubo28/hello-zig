@@ -47,7 +47,7 @@ pub fn init() !void {
 }
 
 fn initSpecialSymbol(sym: []const u8, dst: *?ValueRef) !void {
-    var ptr = try M.newValue(Value{ .symbol = try S.getOrRegister(sym) });
+    const ptr = try M.newValue(Value{ .symbol = try S.getOrRegister(sym) });
     dst.* = ptr;
 }
 

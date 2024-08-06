@@ -16,7 +16,7 @@ const ValueRef = C.ValueRef;
 
 pub fn main() !void {
     const args = try std.process.argsAlloc(C.alloc);
-    var env = try init();
+    const env = try init();
     if (args.len == 2) {
         try evalFile(args[1], env);
         return;
@@ -68,7 +68,7 @@ fn repl(env: EnvRef) !void {
 fn readLine(reader: anytype) !?[]const u8 {
     // Don't free buffer since it's referenced from slices in env entry.
     const len = 8192;
-    var buffer: []u8 = try alloc.alloc(u8, len);
+    const buffer: []u8 = try alloc.alloc(u8, len);
     var fbs = std.io.fixedBufferStream(buffer);
     try reader.streamUntilDelimiter(fbs.writer(), '\n', len);
     return fbs.getWritten();
@@ -85,7 +85,7 @@ pub fn eval(code: []const u8, env: EnvRef) !struct { ValueRef, EnvRef } {
 pub fn toAST(code: []const u8) ![]ValueRef {
     const tokens = try T.tokenize(code);
     const sexprs = try P.parse(tokens);
-    var result = try C.alloc.alloc(ValueRef, sexprs.len);
+    const result = try C.alloc.alloc(ValueRef, sexprs.len);
     try Pre.preprocessAll(sexprs, result);
     return result;
 }
